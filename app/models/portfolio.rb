@@ -1,8 +1,11 @@
 class Portfolio < ApplicationRecord
+  has_many :technologies
+  accepts_nested_attributes_for :technologies,
+                                reject_if: lambda { |attrs| attrs['name'].blank? }
+
   include Placeholder
   validates_presence_of :title, :body, :main_image, :thumb_image
-  
-  #Pretty much just references on how to create a custom scope. See 'How to Implement Custom Scopes in Rails 5' in section 2 for more instruction.
+
   def self.angular
     where(subtitle: 'Angular')
   end
