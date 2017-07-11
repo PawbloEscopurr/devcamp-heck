@@ -6,10 +6,11 @@ class PortfoliosController < ApplicationController
     #If it turns out I'm wrong and future me does need this, see Section 2, 'How to Implement Custom Scopes in Rails 5' at 11:50.
     def new
         @portfolio_item = Portfolio.new
+        3.times { @portfolio_item.technologies.build }
     end
     
   def create
-    @portfolio_item = Portfolio.new(params.require(:portfolio).permit(:title, :subtitle, :body))
+    @portfolio_item = Portfolio.new(params.require(:portfolio).permit(:title, :subtitle, :body, technologies_attributes: [:name]))
 
     respond_to do |format|
       if @portfolio_item.save
